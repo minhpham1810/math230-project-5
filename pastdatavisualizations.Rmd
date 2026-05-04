@@ -15,21 +15,21 @@ knitr::opts_chunk$set(echo = FALSE)
 ::: columns
 ::: column
 ```{r}
-knitr::include_graphics("file_show.png")
+knitr::include_graphics("assets/gen_art_1.png")
 ```
 **Title:** *Artwork 1*
 :::
 
 ::: column
 ```{r}
-knitr::include_graphics("file_show (1).png")
+knitr::include_graphics("assets/gen_art_2.png")
 ```
 **Title:** *Artwork 2*
 :::
 
 ::: column
 ```{r}
-knitr::include_graphics("file_show (2).png")
+knitr::include_graphics("assets/gen_art_3.png")
 ```
 **Title:** *Artwork 3*
 
@@ -39,7 +39,7 @@ knitr::include_graphics("file_show (2).png")
 ## ggplot() Extenstion Project
 
 ```{r}
-knitr::include_graphics("000016.png")
+knitr::include_graphics("assets/ggplot_extension.png")
 ```
 
 **Title:** *Alluvial Plot of Sex vs. Average Time*
@@ -53,7 +53,7 @@ This alluvial plot shows how observations flow from sex categories into average 
 ## Introductory Statistics Visualization
 
 ```{r, out.width="100%"}
-knitr::include_graphics("unnamed (4).png")
+knitr::include_graphics("assets/intro_stats.png")
 ```
 
 **Title:** *Lower-Tailed Randomization Test for Population Proportion*
@@ -73,13 +73,13 @@ This plot displays the sampling distribution of proportions under the null hypot
 ::: columns
 ::: column
 ```{r}
-knitr::include_graphics("dear_data1.jpg")
+knitr::include_graphics("assets/dear_data1.jpg")
 ```
 :::
 
 ::: column
 ```{r}
-knitr::include_graphics("dear_data2.jpg")
+knitr::include_graphics("assets/dear_data2.jpg")
 ```
 :::
 :::
@@ -92,7 +92,7 @@ This piece transforms daily music habits into a creative, wearable-style design.
 ## Another Visualization from the Course
 
 ```{r}
-knitr::include_graphics("image (1).png")
+knitr::include_graphics("assets/contour_heatmap.png")
 ```
 
 

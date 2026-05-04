@@ -22,8 +22,8 @@ This website is a collection of visual work created throughout the semester in M
 
 The portfolio includes earlier visualizations from the semester, including generative artwork, a ggplot extension project, an introductory statistics dashboard, and a hand-drawn data postcard. It also features a larger virtual art exhibit built around a real-world dataset.
 
-```{r, echo=FALSE, out.width="90%"}
-knitr::include_graphics("sleep_infographic.png")
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("assets/sleep_infographic.png")
 ```
 
 ## Featured Exhibit: The Architecture of Sleep
