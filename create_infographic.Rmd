@@ -1,0 +1,147 @@
+---
+title: "create_infographic"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(patchwork)
+
+sleep <- read.csv("sleep_health_dataset.csv")
+
+sleep_palette <- c(
+  "midnight" = "#1B263B",
+  "deep_blue" = "#415A77",
+  "soft_blue" = "#778DA9",
+  "moonlight" = "#E0E1DD",
+  "lavender" = "#CDB4DB",
+  "dream_pink" = "#FFC8DD",
+  "sunrise_coral" = "#FFAF87"
+)
+
+sleep <- sleep %>%
+  mutate(
+    exercise_day = factor(exercise_day, labels = c("No Exercise", "Exercise")),
+    felt_rested = factor(felt_rested, labels = c("Did Not Feel Rested", "Felt Rested")),
+    sleep_aid_used = factor(sleep_aid_used, labels = c("No Sleep Aid", "Used Sleep Aid")),
+    shift_work = factor(shift_work, labels = c("No Shift Work", "Shift Work"))
+  )
+
+# Summary statistics
+avg_sleep <- round(mean(sleep$sleep_duration_hrs, na.rm = TRUE), 2)
+avg_quality <- round(mean(sleep$sleep_quality_score, na.rm = TRUE), 2)
+rested_pct <- round(mean(sleep$felt_rested == "Felt Rested", na.rm = TRUE) * 100, 1)
+
+# A reusable minimal theme
+theme_sleep <- function() {
+  theme_minimal() +
+    theme(
+      plot.title = element_text(face = "bold", size = 16, color = sleep_palette["midnight"]),
+      plot.subtitle = element_text(size = 11, color = sleep_palette["deep_blue"]),
+      axis.title = element_text(color = sleep_palette["midnight"], face = "bold"),
+      axis.text = element_text(color = sleep_palette["deep_blue"]),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "gray90")
+    )
+}
+
+# Title block
+title_plot <- ggplot() +
+  annotate("text", x = 0.5, y = 0.72,
+           label = "The Architecture of Sleep",
+           size = 10, fontface = "bold", color = sleep_palette["midnight"]) +
+  annotate("text", x = 0.5, y = 0.45,
+           label = "How Daily Habits Shape Rest and Performance",
+           size = 5, color = sleep_palette["deep_blue"]) +
+  annotate("text", x = 0.5, y = 0.18,
+           label = "A visual exhibit exploring sleep duration, work habits, caffeine use, and health risk.",
+           size = 4, color = sleep_palette["deep_blue"]) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void()
+
+# Stat cards
+stat1 <- ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1, fill = sleep_palette["moonlight"], color = NA) +
+  annotate("text", x = 0.5, y = 0.65, label = avg_sleep, size = 10, fontface = "bold", color = sleep_palette["midnight"]) +
+  annotate("text", x = 0.5, y = 0.32, label = "Average Sleep Hours", size = 4.5, color = sleep_palette["deep_blue"]) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void()
+
+stat2 <- ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1, fill = sleep_palette["lavender"], color = NA) +
+  annotate("text", x = 0.5, y = 0.65, label = avg_quality, size = 10, fontface = "bold", color = sleep_palette["midnight"]) +
+  annotate("text", x = 0.5, y = 0.32, label = "Average Sleep Quality", size = 4.5, color = sleep_palette["deep_blue"]) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void()
+
+stat3 <- ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1, fill = sleep_palette["dream_pink"], color = NA) +
+  annotate("text", x = 0.5, y = 0.65, label = paste0(rested_pct, "%"), size = 10, fontface = "bold", color = sleep_palette["midnight"]) +
+  annotate("text", x = 0.5, y = 0.32, label = "Felt Rested", size = 4.5, color = sleep_palette["deep_blue"]) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void()
+
+# Teaser visualization 1
+p1 <- ggplot(sleep, aes(x = sleep_duration_hrs, y = sleep_quality_score)) +
+  geom_point(alpha = 0.08, color = sleep_palette["soft_blue"]) +
+  geom_smooth(color = sleep_palette["sunrise_coral"], se = FALSE, linewidth = 1.2) +
+  labs(
+    title = "Sleep Duration and Sleep Quality",
+    x = "Sleep Duration (hours)",
+    y = "Sleep Quality Score"
+  ) +
+  theme_sleep()
+
+# Teaser visualization 2
+p2 <- ggplot(sleep, aes(x = work_hours_that_day, y = sleep_duration_hrs)) +
+  geom_point(alpha = 0.08, color = sleep_palette["lavender"]) +
+  geom_smooth(color = sleep_palette["midnight"], se = FALSE, linewidth = 1.2) +
+  labs(
+    title = "Work Hours and Sleep Duration",
+    x = "Work Hours",
+    y = "Sleep Duration (hours)"
+  ) +
+  theme_sleep()
+
+# Teaser visualization 3
+p3 <- ggplot(sleep, aes(x = sleep_disorder_risk, y = sleep_quality_score, fill = sleep_disorder_risk)) +
+  geom_boxplot(alpha = 0.9, show.legend = FALSE) +
+  scale_fill_manual(values = c(
+    "Healthy" = sleep_palette["soft_blue"],
+    "Low" = sleep_palette["moonlight"],
+    "Moderate" = sleep_palette["lavender"],
+    "High" = sleep_palette["sunrise_coral"]
+  )) +
+  labs(
+    title = "Sleep Disorder Risk and Sleep Quality",
+    x = "Sleep Disorder Risk",
+    y = "Sleep Quality Score"
+  ) +
+  theme_sleep()
+
+# Footer / call to action
+footer_plot <- ggplot() +
+  annotate("rect", xmin = 0, xmax = 1, ymin = 0, ymax = 1, fill = sleep_palette["midnight"], color = NA) +
+  annotate("text", x = 0.5, y = 0.62,
+           label = "Explore the full exhibit to see how daily habits shape sleep, health, and performance.",
+           size = 4.5, color = "white", fontface = "bold") +
+  annotate("text", x = 0.5, y = 0.28,
+           label = "MATH 230 Data Visualization Exhibit",
+           size = 4, color = sleep_palette["moonlight"]) +
+  xlim(0, 1) + ylim(0, 1) +
+  theme_void()
+
+# Combine into infographic
+infographic <- title_plot /
+  (stat1 | stat2 | stat3) /
+  (p1 | p2 | p3) /
+  footer_plot +
+  plot_layout(heights = c(1.1, 0.9, 2.3, 0.8))
+
+infographic
+
+# Save as image
+ggsave("sleep_infographic.png", infographic, width = 14, height = 16, dpi = 300)
+```
+

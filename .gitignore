@@ -1,0 +1,13 @@
+# RStudio Project Files
+*.Rproj.user
+*.Rhistory
+*.RData
+*.Ruserdata
+
+# Distill/R/R Markdown Cache and Indexing
+*_cache/
+*.html.json
+*.html.lock
+
+# Site Output
+# Uncomment the following line if you DO NOT use the "docs" folder for 

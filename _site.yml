@@ -1,0 +1,16 @@
+name: "math230.website"
+title: "MATH 230 Website"
+description: |
+  Minh Pham's MATH 230 Website
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Past Data Visualizations"
+      href: pastdatavisualizations.html
+    - text: "Story Boarding"
+      href: storyboarding.html
+output: distill::distill_article

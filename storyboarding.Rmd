@@ -1,0 +1,402 @@
+---
+title: "The Architecture of Sleep"
+description: |
+  A data visualization exhibit about sleep, daily habits, and performance.
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+
+sleep <- read.csv("sleep_health_dataset.csv")
+
+sleep_palette <- c(
+  "night_blue" = "#1B263B",
+  "soft_blue" = "#778DA9",
+  "moon" = "#E0E1DD",
+  "lavender" = "#CDB4DB",
+  "coral" = "#FFB4A2"
+)
+
+sleep <- sleep %>%
+  mutate(
+    exercise_day = factor(exercise_day, labels = c("No Exercise", "Exercise")),
+    felt_rested = factor(felt_rested, labels = c("Did Not Feel Rested", "Felt Rested")),
+    sleep_aid_used = factor(sleep_aid_used, labels = c("No Sleep Aid", "Used Sleep Aid")),
+    shift_work = factor(shift_work, labels = c("No Shift Work", "Shift Work"))
+  )
+
+theme_sleep <- function() {
+  theme_minimal() +
+    theme(
+      plot.title = element_text(
+        face = "bold",
+        color = sleep_palette["night_blue"],
+        size = 15
+      ),
+      axis.title = element_text(
+        color = sleep_palette["night_blue"],
+        face = "bold"
+      ),
+      axis.text = element_text(
+        color = sleep_palette["night_blue"]
+      ),
+      panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(color = "gray90"),
+      legend.title = element_text(
+        color = sleep_palette["night_blue"],
+        face = "bold"
+      ),
+      legend.text = element_text(
+        color = sleep_palette["night_blue"]
+      )
+    )
+}
+```
+
+# The Architecture of Sleep
+
+## Introduction
+
+Sleep is shaped by more than just the number of hours a person spends in bed. Daily routines, work schedules, caffeine use, sleep aids, health risks, and feelings of rest all influence how well people sleep and how they perform the next day.
+
+This exhibit uses the *Sleep Health and Daily Performance Dataset* from Kaggle. The dataset contains 100,000 observations and 32 variables related to sleep behavior, health, lifestyle habits, and cognitive performance. Some of the main variables in this exhibit include sleep duration, sleep quality score, work hours, caffeine before bed, sleep aid use, sleep disorder risk, and cognitive performance.
+
+The goal of this exhibit is to tell a visual story about how modern habits shape rest. The story begins with a summary of the dataset, then moves into daily habits, stimulant use, sleep aids, health risk, and cognitive performance.
+
+## Color Palette
+
+For this exhibit, I created a night-inspired color palette to match the theme of sleep and daily performance. The palette uses deep blue to represent nighttime and rest, soft blue and lavender to create a calm atmosphere, moonlight gray for contrast, and coral as an accent color for important trends and comparisons.
+
+Using the same palette across the exhibit helps the visualizations feel connected as one cohesive virtual art exhibit.
+
+---
+
+## Part 1: Understanding the Dataset
+
+The first step in telling the story of sleep is understanding the overall shape of the data. Before examining habits or outcomes, it is important to look at the basic distributions of sleep duration and sleep quality.
+
+Visualizations 1 and 2 provide this foundation. The distribution of sleep duration shows how many hours people typically sleep, while the distribution of sleep quality scores shows how participants’ sleep is rated across the dataset. Together, these graphs introduce the two central sleep variables used throughout the exhibit.
+
+---
+
+## Visualization 1
+
+```{r, out.width="80%"}
+ggplot(sleep, aes(x = sleep_duration_hrs)) +
+  geom_histogram(
+    fill = sleep_palette["soft_blue"],
+    color = "white",
+    bins = 30
+  ) +
+  labs(
+    title = "Distribution of Sleep Duration",
+    x = "Sleep Duration (hours)",
+    y = "Count"
+  ) +
+  theme_sleep()
+```
+
+**Title:** *Distribution of Sleep Duration*  
+
+**Dataset and variables:**  
+This visualization uses `sleep_duration_hrs`, which measures the number of hours individuals slept.
+
+**What the visualization shows:**  
+This histogram shows how sleep duration is distributed across the dataset. It helps identify the most common sleep lengths and gives viewers a baseline understanding of typical sleep patterns.
+
+---
+
+## Visualization 2
+
+```{r, out.width="80%"}
+ggplot(sleep, aes(x = sleep_quality_score)) +
+  geom_histogram(
+    fill = sleep_palette["lavender"],
+    color = "white",
+    bins = 30
+  ) +
+  labs(
+    title = "Distribution of Sleep Quality Scores",
+    x = "Sleep Quality Score",
+    y = "Count"
+  ) +
+  theme_sleep()
+```
+
+**Title:** *Distribution of Sleep Quality*  
+
+**Dataset and variables:**  
+This visualization uses `sleep_quality_score`, which measures reported sleep quality.
+
+**What the visualization shows:**  
+This histogram shows how sleep quality scores are distributed across individuals. It helps establish how people generally rate their sleep before the exhibit moves into possible influences on sleep quality.
+
+---
+
+## Part 2: Daily Habits and Sleep Quality
+
+After introducing the main sleep variables, the next part of the exhibit explores how daily habits relate to sleep. Sleep is not separate from the rest of the day; it can be shaped by work demands, routines, and the amount of time people have available for rest.
+
+Visualization 3 examines the relationship between sleep duration and sleep quality. This graph connects the amount of sleep someone gets to the quality of that sleep.
+
+Visualization 4 looks at work hours and sleep duration. This adds another part to the story by asking whether longer work days may be associated with shorter sleep.
+
+Together, these visualizations suggest that sleep quality is connected not only to nighttime behavior, but also to the structure of daily life.
+
+---
+
+## Visualization 3
+
+```{r, out.width="80%"}
+ggplot(sleep, aes(x = sleep_duration_hrs, y = sleep_quality_score)) +
+  geom_point(
+    alpha = 0.10,
+    color = sleep_palette["soft_blue"]
+  ) +
+  geom_smooth(
+    color = sleep_palette["coral"],
+    se = FALSE,
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Sleep Duration and Sleep Quality",
+    x = "Sleep Duration (hours)",
+    y = "Sleep Quality Score"
+  ) +
+  theme_sleep()
+```
+
+**Title:** *Sleep Duration and Sleep Quality*  
+
+**Dataset and variables:**  
+This visualization uses `sleep_duration_hrs` and `sleep_quality_score`.
+
+**What the visualization shows:**  
+This plot shows whether people who sleep longer tend to report higher sleep quality. The trend line helps summarize the overall relationship between sleep quantity and sleep experience.
+
+---
+
+## Visualization 4
+
+```{r, out.width="80%"}
+ggplot(sleep, aes(x = work_hours_that_day, y = sleep_duration_hrs)) +
+  geom_point(
+    alpha = 0.08,
+    color = sleep_palette["lavender"]
+  ) +
+  geom_smooth(
+    color = sleep_palette["night_blue"],
+    se = FALSE,
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Work Hours and Sleep Duration",
+    x = "Work Hours That Day",
+    y = "Sleep Duration (hours)"
+  ) +
+  theme_sleep()
+```
+
+**Title:** *Work Hours and Sleep Duration*  
+
+**Dataset and variables:**  
+This visualization uses `work_hours_that_day` and `sleep_duration_hrs`.
+
+**What the visualization shows:**  
+This plot explores how the number of hours worked in a day relates to sleep duration. It helps show whether heavier work demands may be connected to getting less sleep.
+
+---
+
+## Part 3: Stimulants, Sleep Aids, and Sleep Quality
+
+The third section focuses on behaviors that may directly affect sleep or reflect attempts to manage sleep problems. Caffeine before bed and sleep aid use are important because they represent choices people make near sleep time.
+
+Visualization 5 explores the relationship between caffeine before bed and sleep quality. Since caffeine is a stimulant, this graph helps examine whether higher caffeine intake before sleep is associated with lower sleep quality.
+
+Visualization 6 compares sleep quality between people who used sleep aids and those who did not. This graph adds complexity because sleep aid use may not simply mean better sleep. It may also indicate that a person was already struggling with sleep.
+
+Together, these visualizations show that sleep-related behaviors are not always simple. Some habits may interfere with rest, while others may reflect efforts to improve it.
+
+---
+
+## Visualization 5
+
+```{r, out.width="80%"}
+ggplot(sleep, aes(x = caffeine_mg_before_bed, y = sleep_quality_score)) +
+  geom_point(
+    alpha = 0.08,
+    color = sleep_palette["soft_blue"]
+  ) +
+  geom_smooth(
+    color = sleep_palette["coral"],
+    se = FALSE,
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Caffeine Before Bed and Sleep Quality",
+    x = "Caffeine Before Bed (mg)",
+    y = "Sleep Quality Score"
+  ) +
+  theme_sleep()
+```
+
+**Title:** *Caffeine and Sleep Quality*  
+
+**Dataset and variables:**  
+This visualization uses `caffeine_mg_before_bed` and `sleep_quality_score`.
+
+**What the visualization shows:**  
+This plot shows how caffeine intake before bed relates to sleep quality. It helps reveal whether higher caffeine consumption near bedtime is associated with poorer sleep.
+
+---
+
+## Visualization 6
+
+```{r, out.width="70%"}
+ggplot(sleep, aes(x = sleep_aid_used, y = sleep_quality_score, fill = sleep_aid_used)) +
+  geom_boxplot(
+    alpha = 0.85,
+    color = sleep_palette["night_blue"]
+  ) +
+  scale_fill_manual(
+    values = c(
+      "No Sleep Aid" = sleep_palette["soft_blue"],
+      "Used Sleep Aid" = sleep_palette["coral"]
+    )
+  ) +
+  labs(
+    title = "Sleep Aid Use and Sleep Quality",
+    x = "Sleep Aid Use",
+    y = "Sleep Quality Score"
+  ) +
+  theme_sleep() +
+  theme(legend.position = "none")
+```
+
+**Title:** *Sleep Aids and Sleep Quality*  
+
+**Dataset and variables:**  
+This visualization uses `sleep_aid_used` and `sleep_quality_score`.
+
+**What the visualization shows:**  
+This boxplot compares sleep quality between individuals who used sleep aids and those who did not. It raises the question of whether sleep aids are linked to better sleep or whether they are more common among people already experiencing sleep difficulties.
+
+---
+
+## Part 4: Sleep, Health Risk, and Performance
+
+The final section connects sleep to broader outcomes. After looking at habits and sleep-related behaviors, the exhibit ends by asking what sleep may mean for health risk and daily functioning.
+
+Visualization 7 compares sleep quality across levels of sleep disorder risk. Visualization 8 examines the relationship between sleep duration and cognitive performance. Visualization 9 compares cognitive performance between people who felt rested and those who did not.
+
+Together, these visualizations show that sleep is connected to both health and performance. The exhibit ends by emphasizing that sleep quality is not just about comfort; it may also reflect broader patterns in well-being and daily life.
+
+---
+
+## Visualization 7
+
+```{r, out.width="75%"}
+ggplot(sleep, aes(x = sleep_disorder_risk, y = sleep_quality_score, fill = sleep_disorder_risk)) +
+  geom_boxplot(
+    alpha = 0.85,
+    color = sleep_palette["night_blue"]
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Healthy" = sleep_palette["soft_blue"],
+      "Low" = sleep_palette["moon"],
+      "Moderate" = sleep_palette["lavender"],
+      "High" = sleep_palette["coral"]
+    )
+  ) +
+  labs(
+    title = "Sleep Disorder Risk and Sleep Quality",
+    x = "Sleep Disorder Risk",
+    y = "Sleep Quality Score"
+  ) +
+  theme_sleep() +
+  theme(legend.position = "none")
+```
+
+**Title:** *Sleep Disorder Risk and Sleep Quality*  
+
+**Dataset and variables:**  
+This visualization uses `sleep_disorder_risk` and `sleep_quality_score`.
+
+**What the visualization shows:**  
+This boxplot shows how sleep quality differs across levels of sleep disorder risk. It helps connect individual sleep experiences to broader health-related concerns.
+
+---
+
+## Visualization 8
+
+```{r, out.width="80%"}
+ggplot(sleep, aes(x = sleep_duration_hrs, y = cognitive_performance_score)) +
+  stat_density_2d(
+    aes(fill = after_stat(level)),
+    geom = "polygon",
+    color = "white"
+  ) +
+  scale_fill_gradient(
+    low = sleep_palette["moon"],
+    high = sleep_palette["night_blue"]
+  ) +
+  labs(
+    title = "Sleep Duration and Cognitive Performance",
+    x = "Sleep Duration (hours)",
+    y = "Cognitive Performance Score",
+    fill = "Density"
+  ) +
+  theme_sleep()
+```
+
+**Title:** *Sleep and Performance*  
+
+**Dataset and variables:**  
+This visualization uses `sleep_duration_hrs` and `cognitive_performance_score`.
+
+**What the visualization shows:**  
+This density plot shows where combinations of sleep duration and cognitive performance are most concentrated. It helps explore whether certain sleep durations are associated with stronger daily performance.
+
+---
+
+## Visualization 9
+
+```{r, out.width="70%"}
+ggplot(sleep, aes(x = felt_rested, y = cognitive_performance_score, fill = felt_rested)) +
+  geom_boxplot(
+    alpha = 0.85,
+    color = sleep_palette["night_blue"]
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Did Not Feel Rested" = sleep_palette["lavender"],
+      "Felt Rested" = sleep_palette["coral"]
+    )
+  ) +
+  labs(
+    title = "Feeling Rested and Cognitive Performance",
+    x = "Rested Status",
+    y = "Cognitive Performance Score"
+  ) +
+  theme_sleep() +
+  theme(legend.position = "none")
+```
+
+**Title:** *Feeling Rested and Performance*  
+
+**Dataset and variables:**  
+This visualization uses `felt_rested` and `cognitive_performance_score`.
+
+**What the visualization shows:**  
+This boxplot compares cognitive performance between individuals who felt rested and those who did not. It brings the story back to the lived experience of sleep: not just how long someone sleeps, but whether they wake up feeling restored.
+
+---
+
+## Conclusion
+
+Together, these visualizations show that sleep is connected to many parts of daily life. The exhibit begins by summarizing sleep duration and sleep quality, then explores how work habits, caffeine, and sleep aid use relate to sleep outcomes. Finally, it connects sleep to health risk and cognitive performance.
+
+While these visualizations do not prove causation, they reveal meaningful patterns that can guide deeper statistical analysis. Overall, the exhibit suggests that sleep is not an isolated behavior. It is shaped by daily routines, lifestyle choices, health risk, and how people function after waking.

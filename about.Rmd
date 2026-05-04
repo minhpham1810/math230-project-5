@@ -1,0 +1,34 @@
+---
+title: "About this site"
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This website is a collection of data visualizations created for MATH 230. The goal of this portfolio is to present data not only as numbers, but as stories that can be explored visually. Each page highlights a different part of my work, from earlier visualizations made during the semester to a more developed data story using a real-world dataset.
+
+Data visualization is important because it helps make patterns, relationships, and comparisons easier to understand. A strong visualization should be both informative and visually engaging. Throughout this website, I use graphs, colors, layout, and written explanations to guide viewers through the meaning behind the data.
+
+## Past Data Visualizations
+
+The first page displays selected visualizations from earlier projects in the semester. These include generative artwork, a plot from a ggplot extension project, an introductory statistics dashboard, a hand-drawn data postcard, and other visualizations created using R. Each piece includes a placard that explains the title, dataset, variables, and main message of the visualization.
+
+## Main Data Exhibit
+
+The second page focuses on a real-world dataset about sleep health and daily performance. This exhibit explores how daily habits, work patterns, caffeine use, sleep aids, and sleep quality relate to health risk and cognitive performance.
+
+The story begins with basic summaries of sleep duration and sleep quality. It then moves into relationships between daily habits and sleep outcomes, followed by stimulant use and sleep-related behaviors. Finally, the exhibit examines how sleep connects to health risk and performance.
+
+## Design Choices
+
+For the main exhibit, I created a night-inspired color palette using deep blues, soft lavender, moonlight gray, and warm coral. These colors were chosen to reflect the theme of sleep while keeping the visualizations readable and consistent. The repeated palette helps the page feel like a cohesive virtual art exhibit rather than a collection of unrelated graphs.
+
+## Tools Used
+
+This website was created using R Markdown and Distill. The visualizations were made primarily with `ggplot2`, along with other R tools for data cleaning, layout, and presentation. The project combines statistical thinking, visual design, and written explanation to communicate the story behind the data.
+
+## Reflection
+
+Through this project, I learned that data visualization is not only about making graphs, but also about making thoughtful choices. Choosing variables, colors, graph types, labels, and explanations all affects how viewers understand the data. My goal was to create a website that feels organized, visually engaging, and meaningful while clearly communicating the patterns found in the data.
