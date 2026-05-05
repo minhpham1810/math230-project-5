@@ -2215,10 +2215,11 @@ This visualization uses <code>sleep_quality_score</code>, which measures reporte
 This histogram shows how sleep quality scores are distributed across individuals. It helps establish how people generally rate their sleep before the exhibit moves into possible influences on sleep quality.</p>
 <hr />
 <h2 id="part-2-daily-habits-and-sleep-quality">Part 2: Daily Habits and Sleep Quality</h2>
-<p>After introducing the main sleep variables, the next part of the exhibit explores how daily habits relate to sleep. Sleep is not separate from the rest of the day; it can be shaped by work demands, routines, and the amount of time people have available for rest.</p>
+<p>After looking at daily habits and bedtime screen use, the third section focuses on behaviors that may directly affect sleep or reflect attempts to manage sleep problems. Caffeine before bed and sleep aid use are important because they represent choices people make near sleep time.</p>
 <p>Visualization 3 examines the relationship between sleep duration and sleep quality. This graph connects the amount of sleep someone gets to the quality of that sleep.</p>
 <p>Visualization 4 looks at work hours and sleep duration. This adds another part to the story by asking whether longer work days may be associated with shorter sleep.</p>
-<p>Together, these visualizations suggest that sleep quality is connected not only to nighttime behavior, but also to the structure of daily life.</p>
+<p>Visualization 5 explores screen time before bed and sleep quality. This visualization shifts the story from daytime demands to nighttime routines, showing how behavior right before sleep may also affect rest.</p>
+<p>Together, these visualizations suggest that sleep quality is connected not only to how long people sleep, but also to the structure of their day and the habits they carry into bedtime.</p>
 <hr />
 <h2 id="visualization-3">Visualization 3</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -2276,13 +2277,41 @@ This visualization uses <code>work_hours_that_day</code> and <code>sleep_duratio
 <p><strong>What the visualization shows:</strong><br />
 This plot explores how the number of hours worked in a day relates to sleep duration. It helps show whether heavier work demands may be connected to getting less sleep.</p>
 <hr />
+<h2 id="visualization-5">Visualization 5</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>sleep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>screen_time_before_bed_mins</span>, y <span class='op'>=</span> <span class='va'>sleep_quality_score</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span></span>
+<span>    alpha <span class='op'>=</span> <span class='fl'>0.08</span>,</span>
+<span>    color <span class='op'>=</span> <span class='va'>sleep_palette</span><span class='op'>[</span><span class='st'>"lavender"</span><span class='op'>]</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span></span>
+<span>    color <span class='op'>=</span> <span class='va'>sleep_palette</span><span class='op'>[</span><span class='st'>"coral"</span><span class='op'>]</span>,</span>
+<span>    se <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span>    linewidth <span class='op'>=</span> <span class='fl'>1.2</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Screen Time Before Bed and Sleep Quality"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Screen Time Before Bed (minutes)"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Sleep Quality Score"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'>theme_sleep</span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="storyboarding_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="80%" /></p>
+</div>
+<p><strong>Title:</strong> <em>The Glow Before Sleep</em></p>
+<p><strong>Dataset and variables:</strong><br />
+This visualization uses <code>screen_time_before_bed_mins</code> and <code>sleep_quality_score</code>. Screen time before bed measures how many minutes an individual used a screen before sleeping, while sleep quality score measures the reported quality of sleep.</p>
+<p><strong>What the visualization shows:</strong><br />
+This plot explores whether more screen time before bed is associated with lower sleep quality. It adds to the story by showing how bedtime routines, not just daytime habits, may shape the quality of rest.</p>
+<hr />
 <h2 id="part-3-stimulants-sleep-aids-and-sleep-quality">Part 3: Stimulants, Sleep Aids, and Sleep Quality</h2>
 <p>The third section focuses on behaviors that may directly affect sleep or reflect attempts to manage sleep problems. Caffeine before bed and sleep aid use are important because they represent choices people make near sleep time.</p>
-<p>Visualization 5 explores the relationship between caffeine before bed and sleep quality. Since caffeine is a stimulant, this graph helps examine whether higher caffeine intake before sleep is associated with lower sleep quality.</p>
-<p>Visualization 6 compares sleep quality between people who used sleep aids and those who did not. This graph adds complexity because sleep aid use may not simply mean better sleep. It may also indicate that a person was already struggling with sleep.</p>
+<p>Visualization 6 explores the relationship between caffeine before bed and sleep quality. Since caffeine is a stimulant, this graph helps examine whether higher caffeine intake before sleep is associated with lower sleep quality.</p>
+<p>Visualization 7 compares sleep quality between people who used sleep aids and those who did not. This graph adds complexity because sleep aid use may not simply mean better sleep. It may also indicate that a person was already struggling with sleep.</p>
 <p>Together, these visualizations show that sleep-related behaviors are not always simple. Some habits may interfere with rest, while others may reflect efforts to improve it.</p>
 <hr />
-<h2 id="visualization-5">Visualization 5</h2>
+<h2 id="visualization-6">Visualization 6</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>sleep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>caffeine_mg_before_bed</span>, y <span class='op'>=</span> <span class='va'>sleep_quality_score</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -2302,7 +2331,7 @@ This plot explores how the number of hours worked in a day relates to sleep dura
 <span>  <span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'>theme_sleep</span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="storyboarding_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="80%" /></p>
+<p><img src="storyboarding_files/figure-html5/unnamed-chunk-6-1.png" alt="" width="80%" /></p>
 </div>
 <p><strong>Title:</strong> <em>Caffeine and Sleep Quality</em></p>
 <p><strong>Dataset and variables:</strong><br />
@@ -2310,7 +2339,7 @@ This visualization uses <code>caffeine_mg_before_bed</code> and <code>sleep_qual
 <p><strong>What the visualization shows:</strong><br />
 This plot shows how caffeine intake before bed relates to sleep quality. It helps reveal whether higher caffeine consumption near bedtime is associated with poorer sleep.</p>
 <hr />
-<h2 id="visualization-6">Visualization 6</h2>
+<h2 id="visualization-7">Visualization 7</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>sleep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>sleep_aid_used</span>, y <span class='op'>=</span> <span class='va'>sleep_quality_score</span>, fill <span class='op'>=</span> <span class='va'>sleep_aid_used</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -2332,7 +2361,7 @@ This plot shows how caffeine intake before bed relates to sleep quality. It help
 <span>  <span class='fu'>theme_sleep</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="storyboarding_files/figure-html5/unnamed-chunk-6-1.png" alt="" width="70%" /></p>
+<p><img src="storyboarding_files/figure-html5/unnamed-chunk-7-1.png" alt="" width="70%" /></p>
 </div>
 <p><strong>Title:</strong> <em>Sleep Aids and Sleep Quality</em></p>
 <p><strong>Dataset and variables:</strong><br />
@@ -2342,10 +2371,10 @@ This boxplot compares sleep quality between individuals who used sleep aids and 
 <hr />
 <h2 id="part-4-sleep-health-risk-and-performance">Part 4: Sleep, Health Risk, and Performance</h2>
 <p>The final section connects sleep to broader outcomes. After looking at habits and sleep-related behaviors, the exhibit ends by asking what sleep may mean for health risk and daily functioning.</p>
-<p>Visualization 7 compares sleep quality across levels of sleep disorder risk. Visualization 8 examines the relationship between sleep duration and cognitive performance. Visualization 9 compares cognitive performance between people who felt rested and those who did not.</p>
+<p>Visualization 8 compares sleep quality across levels of sleep disorder risk. Visualization 9 examines the relationship between sleep duration and cognitive performance. Visualization 10 compares cognitive performance between people who felt rested and those who did not.</p>
 <p>Together, these visualizations show that sleep is connected to both health and performance. The exhibit ends by emphasizing that sleep quality is not just about comfort; it may also reflect broader patterns in well-being and daily life.</p>
 <hr />
-<h2 id="visualization-7">Visualization 7</h2>
+<h2 id="visualization-8">Visualization 8</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>sleep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>sleep_disorder_risk</span>, y <span class='op'>=</span> <span class='va'>sleep_quality_score</span>, fill <span class='op'>=</span> <span class='va'>sleep_disorder_risk</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -2369,7 +2398,7 @@ This boxplot compares sleep quality between individuals who used sleep aids and 
 <span>  <span class='fu'>theme_sleep</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="storyboarding_files/figure-html5/unnamed-chunk-7-1.png" alt="" width="75%" /></p>
+<p><img src="storyboarding_files/figure-html5/unnamed-chunk-8-1.png" alt="" width="75%" /></p>
 </div>
 <p><strong>Title:</strong> <em>Sleep Disorder Risk and Sleep Quality</em></p>
 <p><strong>Dataset and variables:</strong><br />
@@ -2377,7 +2406,7 @@ This visualization uses <code>sleep_disorder_risk</code> and <code>sleep_quality
 <p><strong>What the visualization shows:</strong><br />
 This boxplot shows how sleep quality differs across levels of sleep disorder risk. It helps connect individual sleep experiences to broader health-related concerns.</p>
 <hr />
-<h2 id="visualization-8">Visualization 8</h2>
+<h2 id="visualization-9">Visualization 9</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>sleep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>sleep_duration_hrs</span>, y <span class='op'>=</span> <span class='va'>cognitive_performance_score</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -2398,7 +2427,7 @@ This boxplot shows how sleep quality differs across levels of sleep disorder ris
 <span>  <span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'>theme_sleep</span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="storyboarding_files/figure-html5/unnamed-chunk-8-1.png" alt="" width="80%" /></p>
+<p><img src="storyboarding_files/figure-html5/unnamed-chunk-9-1.png" alt="" width="80%" /></p>
 </div>
 <p><strong>Title:</strong> <em>Sleep and Performance</em></p>
 <p><strong>Dataset and variables:</strong><br />
@@ -2406,7 +2435,7 @@ This visualization uses <code>sleep_duration_hrs</code> and <code>cognitive_perf
 <p><strong>What the visualization shows:</strong><br />
 This density plot shows where combinations of sleep duration and cognitive performance are most concentrated. It helps explore whether certain sleep durations are associated with stronger daily performance.</p>
 <hr />
-<h2 id="visualization-9">Visualization 9</h2>
+<h2 id="visualization-10">Visualization 10</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>sleep</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>felt_rested</span>, y <span class='op'>=</span> <span class='va'>cognitive_performance_score</span>, fill <span class='op'>=</span> <span class='va'>felt_rested</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -2428,7 +2457,7 @@ This density plot shows where combinations of sleep duration and cognitive perfo
 <span>  <span class='fu'>theme_sleep</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="storyboarding_files/figure-html5/unnamed-chunk-9-1.png" alt="" width="70%" /></p>
+<p><img src="storyboarding_files/figure-html5/unnamed-chunk-10-1.png" alt="" width="70%" /></p>
 </div>
 <p><strong>Title:</strong> <em>Feeling Rested and Performance</em></p>
 <p><strong>Dataset and variables:</strong><br />

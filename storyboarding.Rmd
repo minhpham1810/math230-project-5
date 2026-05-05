@@ -137,13 +137,15 @@ This histogram shows how sleep quality scores are distributed across individuals
 
 ## Part 2: Daily Habits and Sleep Quality
 
-After introducing the main sleep variables, the next part of the exhibit explores how daily habits relate to sleep. Sleep is not separate from the rest of the day; it can be shaped by work demands, routines, and the amount of time people have available for rest.
+After looking at daily habits and bedtime screen use, the third section focuses on behaviors that may directly affect sleep or reflect attempts to manage sleep problems. Caffeine before bed and sleep aid use are important because they represent choices people make near sleep time.
 
 Visualization 3 examines the relationship between sleep duration and sleep quality. This graph connects the amount of sleep someone gets to the quality of that sleep.
 
 Visualization 4 looks at work hours and sleep duration. This adds another part to the story by asking whether longer work days may be associated with shorter sleep.
 
-Together, these visualizations suggest that sleep quality is connected not only to nighttime behavior, but also to the structure of daily life.
+Visualization 5 explores screen time before bed and sleep quality. This visualization shifts the story from daytime demands to nighttime routines, showing how behavior right before sleep may also affect rest.
+
+Together, these visualizations suggest that sleep quality is connected not only to how long people sleep, but also to the structure of their day and the habits they carry into bedtime.
 
 ---
 
@@ -209,19 +211,50 @@ This plot explores how the number of hours worked in a day relates to sleep dura
 
 ---
 
+## Visualization 5
+
+```{r, out.width="80%"}
+ggplot(sleep, aes(x = screen_time_before_bed_mins, y = sleep_quality_score)) +
+  geom_point(
+    alpha = 0.08,
+    color = sleep_palette["lavender"]
+  ) +
+  geom_smooth(
+    color = sleep_palette["coral"],
+    se = FALSE,
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Screen Time Before Bed and Sleep Quality",
+    x = "Screen Time Before Bed (minutes)",
+    y = "Sleep Quality Score"
+  ) +
+  theme_sleep()
+```
+
+**Title:** *The Glow Before Sleep*  
+
+**Dataset and variables:**  
+This visualization uses `screen_time_before_bed_mins` and `sleep_quality_score`. Screen time before bed measures how many minutes an individual used a screen before sleeping, while sleep quality score measures the reported quality of sleep.
+
+**What the visualization shows:**  
+This plot explores whether more screen time before bed is associated with lower sleep quality. It adds to the story by showing how bedtime routines, not just daytime habits, may shape the quality of rest.
+
+---
+
 ## Part 3: Stimulants, Sleep Aids, and Sleep Quality
 
 The third section focuses on behaviors that may directly affect sleep or reflect attempts to manage sleep problems. Caffeine before bed and sleep aid use are important because they represent choices people make near sleep time.
 
-Visualization 5 explores the relationship between caffeine before bed and sleep quality. Since caffeine is a stimulant, this graph helps examine whether higher caffeine intake before sleep is associated with lower sleep quality.
+Visualization 6 explores the relationship between caffeine before bed and sleep quality. Since caffeine is a stimulant, this graph helps examine whether higher caffeine intake before sleep is associated with lower sleep quality.
 
-Visualization 6 compares sleep quality between people who used sleep aids and those who did not. This graph adds complexity because sleep aid use may not simply mean better sleep. It may also indicate that a person was already struggling with sleep.
+Visualization 7 compares sleep quality between people who used sleep aids and those who did not. This graph adds complexity because sleep aid use may not simply mean better sleep. It may also indicate that a person was already struggling with sleep.
 
 Together, these visualizations show that sleep-related behaviors are not always simple. Some habits may interfere with rest, while others may reflect efforts to improve it.
 
 ---
 
-## Visualization 5
+## Visualization 6
 
 ```{r, out.width="80%"}
 ggplot(sleep, aes(x = caffeine_mg_before_bed, y = sleep_quality_score)) +
@@ -252,7 +285,7 @@ This plot shows how caffeine intake before bed relates to sleep quality. It help
 
 ---
 
-## Visualization 6
+## Visualization 7
 
 ```{r, out.width="70%"}
 ggplot(sleep, aes(x = sleep_aid_used, y = sleep_quality_score, fill = sleep_aid_used)) +
@@ -289,13 +322,13 @@ This boxplot compares sleep quality between individuals who used sleep aids and 
 
 The final section connects sleep to broader outcomes. After looking at habits and sleep-related behaviors, the exhibit ends by asking what sleep may mean for health risk and daily functioning.
 
-Visualization 7 compares sleep quality across levels of sleep disorder risk. Visualization 8 examines the relationship between sleep duration and cognitive performance. Visualization 9 compares cognitive performance between people who felt rested and those who did not.
+Visualization 8 compares sleep quality across levels of sleep disorder risk. Visualization 9 examines the relationship between sleep duration and cognitive performance. Visualization 10 compares cognitive performance between people who felt rested and those who did not.
 
 Together, these visualizations show that sleep is connected to both health and performance. The exhibit ends by emphasizing that sleep quality is not just about comfort; it may also reflect broader patterns in well-being and daily life.
 
 ---
 
-## Visualization 7
+## Visualization 8
 
 ```{r, out.width="75%"}
 ggplot(sleep, aes(x = sleep_disorder_risk, y = sleep_quality_score, fill = sleep_disorder_risk)) +
@@ -330,7 +363,7 @@ This boxplot shows how sleep quality differs across levels of sleep disorder ris
 
 ---
 
-## Visualization 8
+## Visualization 9
 
 ```{r, out.width="80%"}
 ggplot(sleep, aes(x = sleep_duration_hrs, y = cognitive_performance_score)) +
@@ -362,7 +395,7 @@ This density plot shows where combinations of sleep duration and cognitive perfo
 
 ---
 
-## Visualization 9
+## Visualization 10
 
 ```{r, out.width="70%"}
 ggplot(sleep, aes(x = felt_rested, y = cognitive_performance_score, fill = felt_rested)) +
